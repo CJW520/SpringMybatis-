@@ -1,0 +1,91 @@
+server:
+  port: 8080
+
+##MySql数据库连接配置      is_OK
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      db1:
+        url: jdbc:mysql://192.168.10.100:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+  #      url: jdbc:mysql://192.168.10.100:3306/test?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        username: root
+        password: root
+#        url: jdbc:mysql://192.168.10.100:3306/news?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+#  #      url: jdbc:mysql://192.168.10.100:3306/news?useUnicode=true&characterEncoding=utf-8&useSSL=true&serverTimezone=Asia/Shanghai
+#        driver-class-name: com.mysql.cj.jdbc.Driver
+#        username: root
+#        password: root
+      db2:
+        url: jdbc:sqlserver://192.168.10.100:1433;databasename=TEST
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: sa
+        password: 123qwe!@#
+#      db3:
+#        username: TEST
+#        password: TEST
+#        driver-class-name:  oracle.jdbc.driver.OracleDriver
+#        url: jdbc:oracle:thin:@192.168.10.100:1521:orcl
+
+#java.com.cjw.dao如何映射到java.resources.com.cjw.mapper目录
+ 
+
+#日志级别
+#logging:
+#  config: classpath:log4j2.xml
+#
+# mybatis
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath:mapper/*/*.xml
+#  - classpath:mapper/*.xml
+#    - classpath:com/cjw/mapper/**/*.xml
+#    mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+#  mapper-locations: mapper/**/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+#  configuration:
+#    #org.apache.ibatis.logging.stdout.StdOutImpl 控制台打印sql语句方便调试sql语句执行错误
+#    #org.apache.ibatis.logging.log4j2.Log4j2Impl:这个不在控制台打印查询结果,但是在log4j中打印
+#    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
+#    mapUnderscoreToCamelCase: true # 开启驼峰命名转换法
+# 指定log4j2作为日志记录
+#  logging:
+#    config: classpath:log4j2.yml
+
+
+
+#  log级别有ALL <DEBUG<INFO<WARN<ERROR<FATAL<OFF
+logging:
+  level:
+    root: info
+    org.springframework: error
+    org.springframework.boot: ERROR
+    com.cjw.dao: debug
+    com.cjw.filter: debug
+    org.apache: error
+    com.cjw.Demo9Application: off
+  config: classpath:log4j2.yml
+
+
+#  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+#  <property name="basePackage" value="com.huijie.lis.dao" />
+#  <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+#  </bean>
+
+#SqlServer数据库连接配置     is_OK
+#spring:
+#  datasource:
+#    username: sa
+#    password: 123qwe!@#
+#    driver-class-name:  com.microsoft.sqlserver.jdbc.SQLServerDriver
+#    url: jdbc:sqlserver://192.168.10.100:1433;databasename=TEST
+
+##Oracle数据库连接配置      is_OK
+#spring:
+#  datasource:
+#    username: TEST
+#    password: TEST
+#    driver-class-name:  oracle.jdbc.driver.OracleDriver
+#    url: jdbc:oracle:thin:@192.168.10.100:1521:orcl
+

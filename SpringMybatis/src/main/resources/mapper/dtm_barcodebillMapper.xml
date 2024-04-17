@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cjw.dao.dtm_barcodebillMapper">
+    <resultMap id="DtmMap" type="com.cjw.model.dtm_barcodebill">
+        <id column="ID" property="id"  jdbcType="INTEGER"></id>
+        <result column="PATIENTTYPE" property="patienttype" jdbcType="VARCHAR"></result>
+        <result column="TXMTEMPLATE" property="txmtemplate" jdbcType="VARCHAR"></result>
+        <result column="HOSPITALID" property="hospitalid" jdbcType="VARCHAR"></result>
+    </resultMap>
+
+    <sql id="Base_Columns">ID,PATIENTTYPE,TXMTEMPLATE,HOSPITALID</sql>
+    <select id="Dtmlist" resultMap="DtmMap">
+        select  <include refid="Base_Columns" />
+        from dtm_barcodebill
+    </select>
+    <select id="DtmbyId" resultMap="DtmMap" parameterType="int">
+        select    <include refid="Base_Columns" />
+        from dtm_barcodebill where ID= #{id}
+    </select>
+
+    <insert id="AddDtm" parameterType="com.cjw.model.dtm_barcodebill">
+        INSERT INTO  dtm_barcodebill  ( PATIENTTYPE, TXMTEMPLATE, HOSPITALID)
+        VALUES ( #{patienttype,jdbcType=INTEGER},  #{txmtemplate,jdbcType=VARCHAR}, #{patienttype,jdbcType=VARCHAR} )
+    </insert>
+
+    <insert id="UpdDtmbyId" parameterType="com.cjw.model.dtm_barcodebill">
+        update dtm_barcodebill
+        set PATIENTTYPE=#{patienttype},
+            TXMTEMPLATE=#{txmtemplate},
+            HOSPITALID = #{patienttype}
+        where id = #{id}
+
+    </insert>
+
+
+</mapper>

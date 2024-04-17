@@ -1,0 +1,226 @@
+Configuration:
+  # 日志级别
+  status: INFO
+  # 监控间隔
+  monitorInterval: 5
+  Properties:
+    Property:
+      # 日志路径
+      - name: log.path
+        value:  logs
+      - name: show.log
+#        value:  "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        value: "[%d{yyyy-MM-dd HH:mm:ss}] %p [%c] - %m%n"
+#        value: "%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-30.30C{1.} : %m%n"
+  Appenders:
+    Console:
+      # 控制台日志
+      name: Console
+      target: SYSTEM_OUT
+
+      PatternLayout:
+#        Pattern: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        pattern: ${show.log}
+
+    RollingFile:
+      # MyBatis日志
+      - name: INFO_LOG
+#          - ref: com.cjw.filter
+        fileName: ${log.path}/info.log
+        filePattern: ${log.path}/info/info-%d{yyyy-MM-dd}.log
+        PatternLayout:
+          pattern:  ${show.log}
+        #          "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            # 触发间隔
+            interval: 1
+            modulate: true
+        DefaultRolloverStrategy:
+          min: 1
+          max: 100
+      # MyBatis日志
+      - name: DEBUG_LOG
+        fileName: ${log.path}/debug.log
+        filePattern: ${log.path}/debug/debug-%d{yyyy-MM-dd}.log
+        PatternLayout:
+          pattern:  ${show.log}
+        #          "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            # 触发间隔
+            interval: 1
+            modulate: true
+        DefaultRolloverStrategy:
+          min: 1
+          max: 100
+      - name: ERROR_LOG
+        fileName: ${log.path}/error.log
+        filePattern: ${log.path}/error/error-%d{yyyy-MM-dd}.log
+        PatternLayout:
+          pattern:  ${show.log}
+        #          "%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"
+        Policies:
+          TimeBasedTriggeringPolicy:
+            # 触发间隔
+            interval: 1
+            modulate: true
+        DefaultRolloverStrategy:
+          min: 1
+          max: 100
+
+  Loggers:
+    Root:
+      # 日志级别
+      level: debug
+      AppenderRef:
+        # 日志引用
+        - ref: Console
+        - ref: INFO_LOG
+        - ref: DEBUG_LOG
+    Logger:
+      - name: platform_info
+        level: info
+        additivity: true
+        AppenderRef:
+#          - ref: Console
+          - ref: INFO_LOG
+
+      - name: platform_debug
+        level: debug
+        additivity: true
+        AppenderRef:
+          - ref: Console
+          - ref: DEBUG_LOG
+
+      - name: platform_error
+        level: ERROR
+        additivity: true
+        AppenderRef:
+          - ref: Console
+          - ref: ERROR_LOG
+
+#Configuration:
+#  status: warn
+#  monitorInterval: 30
+#  Properties:
+#    Property:
+#      - name: log.level.console
+#        value: info
+#      - name: log.path
+#        value: log
+#      - name: project.name
+#        value: opendoc
+#      - name: log.pattern
+#        value: "%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-30.30C{1.} : %m%n"
+#  Appenders:
+#    Console:
+#      name: CONSOLE
+#      target: SYSTEM_OUT
+#      PatternLayout:
+#        pattern: ${log.pattern}
+#    RollingFile:
+#      - name: ROLLING_FILE
+#        fileName: ${log.path}/${project.name}.log
+#        filePattern: "${log.path}/historyRunLog/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+#        PatternLayout:
+#          pattern: ${log.pattern}
+#        Filters:
+#          ThresholdFilter:
+#            - level: error
+#              onMatch: DENY
+#              onMismatch: NEUTRAL
+#            - level: info
+#              onMatch: ACCEPT
+#              onMismatch: DENY
+#        Policies:
+#          TimeBasedTriggeringPolicy:
+#            modulate: true
+#            interval: 1
+#        DefaultRolloverStrategy:
+#          max: 100
+#
+#      - name: PLATFORM_ROLLING_FILE
+#        ignoreExceptions: false
+#        fileName: ${log.path}/platform/${project.name}_platform.log
+#        filePattern: "${log.path}/platform/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+#        PatternLayout:
+#          pattern: ${log.pattern}
+#        Policies:
+#          TimeBasedTriggeringPolicy:
+#            modulate: true
+#            interval: 1
+#        DefaultRolloverStrategy:
+#          max: 100
+#
+#      - name: BUSSINESS_ROLLING_FILE
+#        ignoreExceptions: false
+#        fileName: ${log.path}/bussiness/${project.name}_bussiness.log
+#        filePattern: "${log.path}/bussiness/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+#        PatternLayout:
+#          pattern: ${log.pattern}
+#        Policies:
+#          TimeBasedTriggeringPolicy:
+#            modulate: true
+#            interval: 1
+#        DefaultRolloverStrategy:
+#          max: 100
+#
+#      - name: EXCEPTION_ROLLING_FILE
+#        ignoreExceptions: false
+#        fileName: ${log.path}/exception/${project.name}_exception.log
+#        filePattern: "${log.path}/exception/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+#        ThresholdFilter:
+#          level: error
+#          onMatch: ACCEPT
+#          onMismatch: DENY
+#        PatternLayout:
+#          pattern: ${log.pattern}
+#        Policies:
+#          TimeBasedTriggeringPolicy:
+#            modulate: true
+#            interval: 1
+#        DefaultRolloverStrategy:
+#          max: 100
+#
+#      - name: DB_ROLLING_FILE
+#        ignoreExceptions: false
+#        fileName: ${log.path}/db/${project.name}_db.log
+#        filePattern: "${log.path}/db/$${date:yyyy-MM}/${project.name}-%d{yyyy-MM-dd}-%i.log.gz"
+#        PatternLayout:
+#          pattern: ${log.pattern}
+#        Policies:
+#          TimeBasedTriggeringPolicy:
+#            modulate: true
+#            interval: 1
+#        DefaultRolloverStrategy:
+#          max: 100
+#  Loggers:
+#    Root:
+#      level: info
+#      AppenderRef:
+#        - ref: CONSOLE
+#        - ref: ROLLING_FILE
+#        - ref: EXCEPTION_ROLLING_FILE
+#    Logger:
+#      - name: platform
+#        level: info
+#        additivity: false
+#        AppenderRef:
+#          - ref: CONSOLE
+#          - ref: PLATFORM_ROLLING_FILE
+#      - name: bussiness
+#        level: info
+#        additivity: false
+#        AppenderRef:
+#          - ref: BUSSINESS_ROLLING_FILE
+#      - name: exception
+#        level: debug
+#        additivity: true
+#        AppenderRef:
+#          - ref: EXCEPTION_ROLLING_FILE
+#      - name: db
+#        level: info
+#        additivity: false
+#        AppenderRef:
+#          - ref: DB_ROLLING_FILE
